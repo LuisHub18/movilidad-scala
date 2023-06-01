@@ -33,4 +33,13 @@ object AlumnoDAO {
       .as(alumnoParser.singleOpt)
   }
 
+  def findByUser(userId: UUID)(implicit conn: Connection): Option[Alumno] = {
+    SQL"""
+        SELECT id_alumno, semestre, num_movilidades, deuda, user_id
+        FROM alumno
+        WHERE user_id = $userId::UUID
+        """
+      .as(alumnoParser.singleOpt)
+  }
+
 }

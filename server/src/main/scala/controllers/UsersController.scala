@@ -93,9 +93,9 @@ class UsersController @Inject() (
   )
   def crearSolicitud() = handleJsonBody[CrearSolicitud.Request] { request =>
     val body = request.body
-    logger.info(s"Create user: ${body.fecha.toString()}")
     for {
-      response <- crearSolicitudAction(body)
+      userId <- authenticate(request)
+      response <- crearSolicitudAction(body, userId)
     } yield Ok(Json.toJson(response))
   }
 

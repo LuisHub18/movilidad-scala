@@ -23,4 +23,10 @@ class AlumnoRepository @Inject() (database: Database)(implicit ec: DatabaseExecu
     }
   }
 
+  def findByUser(idUser: UUID): Future[Option[Alumno]] = Future {
+    database.withConnection { implicit conn =>
+      AlumnoDAO.findByUser(idUser)
+    }
+  }
+
 }

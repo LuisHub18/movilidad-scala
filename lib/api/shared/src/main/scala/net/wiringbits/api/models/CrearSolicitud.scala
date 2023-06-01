@@ -10,30 +10,25 @@ import java.util.UUID
 object CrearSolicitud {
   @ApiModel(value = "CrearSolicitudRequest", description = "Request for the create solicitud API")
   case class Request(
-                      @ApiModelProperty(value = "The id of the alumno", dataType = "String", example = "Alex")
-                      idAlumno:UUID,
-                      @ApiModelProperty(value = "The date of the solicitud", dataType= "String", example = "email@wiringbits.net")
-                      fecha: Instant,
-                      @ApiModelProperty(value = "The description of the solicitud", dataType = "String", example = "notSoWeakPassword")
-                      descripcion: String,
-                      @ApiModelProperty(value = "Instituto", dataType = "String")
-                      idInstituto: UUID,
-                      @ApiModelProperty(value = "The estatus of the solicitud", dataType = "String")
-                      idEstatus: UUID,
-                    )
+      idMateria: UUID,
+      @ApiModelProperty(value = "The description of the solicitud", dataType = "String", example = "notSoWeakPassword")
+      descripcion: String,
+      @ApiModelProperty(value = "Instituto", dataType = "String")
+      idInstitutoDestino: UUID
+  )
   @ApiModel(value = "CreateUserResponse", description = "Response for the create user API")
   case class Response(
-                       @ApiModelProperty(
-                         value = "The id for the created solicitud",
-                         dataType = "String",
-                         example = "e9e8d358-b989-4dd1-834d-764cac539fb1"
-                       )
-                       id: UUID,
-                       @ApiModelProperty(value = "The date for the solicitud", dataType = "String", example = "2023-07-12")
-                       fecha: Instant,
-                       @ApiModelProperty(value = "The description of the solicitud", dataType = "String", example = "Alex")
-                       descripcion: String
-                     )
+      @ApiModelProperty(
+        value = "The id for the created solicitud",
+        dataType = "String",
+        example = "e9e8d358-b989-4dd1-834d-764cac539fb1"
+      )
+      id: UUID,
+      @ApiModelProperty(value = "The date for the solicitud", dataType = "String", example = "2023-07-12")
+      fecha: Instant,
+      @ApiModelProperty(value = "The description of the solicitud", dataType = "String", example = "Alex")
+      descripcion: String
+  )
 
   implicit val createSolicitudRequestFormat: Format[Request] = Json.format[Request]
   implicit val createSolicitudResponseFormat: Format[Response] = Json.format[Response]
