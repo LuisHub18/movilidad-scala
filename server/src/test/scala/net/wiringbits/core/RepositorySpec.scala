@@ -20,6 +20,7 @@ trait RepositorySpec extends AnyWordSpec with PostgresSpec {
     val materia = new MateriaRepository(db)(Executors.databaseEC, clock)
     val estatus = new EstatusRepository(db)(Executors.databaseEC)
     val alumno = new AlumnoRepository(db)(Executors.databaseEC)
+    
     val components =
       RepositoryComponents(
         db,

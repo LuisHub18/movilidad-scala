@@ -101,4 +101,10 @@ package object daos {
       "user_id"
     )
   }
+  val carreraParser: RowParser[Carrera] = {
+    Macro.parser[Carrera](
+      "id_carrera",
+      "nombre"
+    )
+  }
 }
