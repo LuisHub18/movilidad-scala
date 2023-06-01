@@ -27,7 +27,7 @@ trait ApiClient {
   def adminGetUsers(): Future[AdminGetUsers.Response]
 
   def getEnvironmentConfig(): Future[GetEnvironmentConfig.Response]
-
+  def crearSolicitud(request: CrearSolicitud.Request): Future[CrearSolicitud.Response]
   def sendEmailVerificationToken(
       request: SendEmailVerificationToken.Request
   ): Future[SendEmailVerificationToken.Response]
@@ -99,6 +99,18 @@ object ApiClient {
       lastAuthResponse
         .map(base.cookies)
         .getOrElse(base)
+    }
+
+    override def crearSolicitud(request: CrearSolicitud.Request): Future[CrearSolicitud.Response] = {
+      val path = ServerAPI.path :+ "solicitud"
+      val uri = ServerAPI.withPath(path)
+
+      prepareRequest[CrearSolicitud.Response]
+        .post(uri)
+        .body(Json.toJson(request).toString())
+        .send(backend)
+        .map(_.body)
+        .flatMap(Future.fromTry)
     }
 
     override def createUser(request: CreateUser.Request): Future[CreateUser.Response] = {

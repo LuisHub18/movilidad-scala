@@ -34,6 +34,7 @@ class UsersController @Inject() (
     updatePasswordAction: UpdatePasswordAction,
     getUserLogsAction: GetUserLogsAction,
     getUniversidadesAction: GetUniversidadesAction,
+    crearSolicitudAction: CrearSolicitudAction,
     sendEmailVerificationTokenAction: SendEmailVerificationTokenAction,
     getMateriasAction: GetMateriasAction
 )(implicit cc: ControllerComponents, ec: ExecutionContext)
@@ -66,6 +67,35 @@ class UsersController @Inject() (
     logger.info(s"Create user: ${body.email.string}")
     for {
       response <- createUserAction(body)
+    } yield Ok(Json.toJson(response))
+  }
+
+  @ApiOperation(
+    value = "Creates solicitud de inscripcion",
+    notes = "Requires a captcha"
+  )
+  @ApiImplicitParams(
+    Array(
+      new ApiImplicitParam(
+        name = "body",
+        value = "JSON Body",
+        required = true,
+        paramType = "body",
+        dataTypeClass = classOf[CreateUser.Request]
+      )
+    )
+  )
+  @ApiResponses(
+    Array(
+      new ApiResponse(code = 200, message = "The account was created", response = classOf[CrearSolicitud.Response]),
+      new ApiResponse(code = 400, message = "Invalid or missing arguments")
+    )
+  )
+  def crearSolicitud() = handleJsonBody[CrearSolicitud.Request] { request =>
+    val body = request.body
+    logger.info(s"Create user: ${body.fecha.toString()}")
+    for {
+      response <- crearSolicitudAction(body)
     } yield Ok(Json.toJson(response))
   }
 

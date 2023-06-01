@@ -15,6 +15,8 @@ GET  /auth/me controllers.AuthController.getCurrentUser()
 
 # create new user (public)
 POST /users controllers.UsersController.create()
+POST /solicitud controllers.UsersController.crearSolicitud()
+
 # verify new user's email
 POST /users/verify-email controllers.UsersController.verifyEmail()
 # send a link to reset user's password
