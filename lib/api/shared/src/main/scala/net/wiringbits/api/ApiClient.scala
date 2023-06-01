@@ -22,7 +22,7 @@ trait ApiClient {
   def updateUser(request: UpdateUser.Request): Future[UpdateUser.Response]
   def updatePassword(request: UpdatePassword.Request): Future[UpdatePassword.Response]
   def getUserLogs(): Future[GetUserLogs.Response]
-
+  def getUniversidades(): Future[GetUniversidades.Response]
   def adminGetUserLogs(userId: UUID): Future[AdminGetUserLogs.Response]
   def adminGetUsers(): Future[AdminGetUsers.Response]
 
@@ -215,6 +215,17 @@ object ApiClient {
       val uri = ServerAPI.withPath(path)
 
       prepareRequest[GetUserLogs.Response]
+        .get(uri)
+        .send(backend)
+        .map(_.body)
+        .flatMap(Future.fromTry)
+    }
+
+    override def getUniversidades(): Future[GetUniversidades.Response] = {
+      val path = ServerAPI.path :+ "universidades"
+      val uri = ServerAPI.withPath(path)
+
+      prepareRequest[GetUniversidades.Response]
         .get(uri)
         .send(backend)
         .map(_.body)

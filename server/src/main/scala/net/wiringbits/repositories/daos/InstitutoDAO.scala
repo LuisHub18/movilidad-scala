@@ -21,7 +21,13 @@ object InstitutoDAO {
       """
       .execute()
   }
-
+  def all()(implicit conn: Connection): List[Instituto] = {
+    SQL"""
+      SELECT id_instituto, nombre, domicilio, telefono
+      FROM instituto
+      """
+      .as(institutoParser.*)
+  }
   def find(idInstituto: UUID)(implicit conn: Connection): Option[Instituto] = {
     SQL"""
       SELECT id_instituto, nombre, domicilio, telefono

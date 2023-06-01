@@ -32,6 +32,7 @@ class UsersController @Inject() (
     updateUserAction: UpdateUserAction,
     updatePasswordAction: UpdatePasswordAction,
     getUserLogsAction: GetUserLogsAction,
+    getUniversidadesAction: GetUniversidadesAction,
     sendEmailVerificationTokenAction: SendEmailVerificationTokenAction
 )(implicit cc: ControllerComponents, ec: ExecutionContext)
     extends AbstractController(cc) {
@@ -285,6 +286,23 @@ class UsersController @Inject() (
       userId <- authenticate(request)
       _ = logger.info(s"Get user logs: $userId")
       response <- getUserLogsAction(userId)
+    } yield Ok(Json.toJson(response))
+  }
+
+  @ApiOperation(
+    value = "Devuelve las universidades"
+  )
+  @ApiResponses(
+    Array(
+      new ApiResponse(code = 200, message = "Got universitys", response = classOf[GetUserLogs.Response]),
+      new ApiResponse(code = 400, message = "Authentication failed")
+    )
+  )
+  def getUniversidades() = handleGET { request =>
+    logger.info(s"Get universidades")
+    for {
+      //userId <- authenticate(request)
+      response <- getUniversidadesAction()
     } yield Ok(Json.toJson(response))
   }
 }
