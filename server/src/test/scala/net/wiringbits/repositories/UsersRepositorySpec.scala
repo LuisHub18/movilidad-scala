@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.stream.scaladsl.Sink
 import net.wiringbits.common.models.{Email, Name}
 import net.wiringbits.core.RepositorySpec
-import net.wiringbits.repositories.models.{Materia, User}
+import net.wiringbits.repositories.models.{Carrera, Materia, Rol, User}
 import net.wiringbits.util.EmailMessage
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.OptionValues._
@@ -41,6 +41,58 @@ class UsersRepositorySpec extends RepositorySpec with BeforeAndAfterAll {
           nombre = "Matematicas"
         )
         repositories.materia.create(request).futureValue
+    }
+    "crear carrera" in withRepositories(){
+      repositories =>
+        val request = Carrera.CreateCarrera(
+          id_carrera = UUID.randomUUID(),
+          nombre = "Matematicas"
+        )
+        repositories.carreraRepository.create(request).futureValue
+    }
+    "all carrera" in withRepositories(){
+      repositories =>
+        val request = Carrera.CreateCarrera(
+          id_carrera = UUID.randomUUID(),
+          nombre = "Matematicas"
+        )
+        repositories.carreraRepository.create(request).futureValue
+        val response = repositories.carreraRepository.all().futureValue
+        response.length must be (1)
+    }
+    "find carrera" in withRepositories(){ repositories =>
+      val request = Carrera.CreateCarrera(
+        id_carrera = UUID.randomUUID(),
+        nombre = "Matematicas"
+      )
+      repositories.carreraRepository.create(request).futureValue
+      val response = repositories.carreraRepository.find(request.id_carrera).futureValue
+      response.value.nombre must be ("Matematicas")
+    }
+    "crear rol" in withRepositories(){ repositories =>
+      val request = Rol.CreateRol(
+        id_rol = UUID.randomUUID(),
+        tipo = "Alumno"
+      )
+      repositories.rolRepository.create(request).futureValue
+    }
+    "all rol" in withRepositories(){ repositories =>
+      val request = Rol.CreateRol(
+        id_rol = UUID.randomUUID(),
+        tipo = "Alumno"
+      )
+      repositories.rolRepository.create(request).futureValue
+      val response = repositories.rolRepository.all().futureValue
+      response.length must be (1)
+    }
+    "find rol" in withRepositories(){ repositories =>
+      val request = Rol.CreateRol(
+        id_rol = UUID.randomUUID(),
+        tipo = "Alumno"
+      )
+      repositories.rolRepository.create(request).futureValue
+      val response = repositories.rolRepository.find(request.id_rol).futureValue
+      response.value.tipo must be ("Alumno")
     }
     "return all the materias" in withRepositories(){
       repositories =>

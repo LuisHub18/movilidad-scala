@@ -117,4 +117,10 @@ package object daos {
       "nombre"
     )
   }
+  val rolParser: RowParser[Rol] = {
+    Macro.parser[Rol](
+      "id_rol",
+      "tipo"
+    )
+  }
 }
