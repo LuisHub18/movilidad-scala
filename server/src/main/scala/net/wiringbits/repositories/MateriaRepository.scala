@@ -11,10 +11,10 @@ import javax.inject.Inject
 import scala.concurrent.Future
 
 class MateriaRepository @Inject() (
-  database: Database
+    database: Database
 )(implicit
-  ec: DatabaseExecutionContext,
-  clock: Clock
+    ec: DatabaseExecutionContext,
+    clock: Clock
 ) {
 
   def create(request: Materia.CreateMateria): Future[Unit] = Future {

@@ -11,10 +11,10 @@ import javax.inject.Inject
 import scala.concurrent.Future
 
 class RolRepository @Inject() (
-  database: Database
+    database: Database
 )(implicit
-  ec: DatabaseExecutionContext,
-  clock: Clock
+    ec: DatabaseExecutionContext,
+    clock: Clock
 ) {
 
   def create(request: Rol.CreateRol): Future[Unit] = Future {

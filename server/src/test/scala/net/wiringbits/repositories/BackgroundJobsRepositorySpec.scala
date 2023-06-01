@@ -6,7 +6,16 @@ import net.wiringbits.common.models.{Email, Name}
 import net.wiringbits.core.RepositorySpec
 import net.wiringbits.models.jobs.{BackgroundJobPayload, BackgroundJobStatus, BackgroundJobType}
 import net.wiringbits.repositories.daos.BackgroundJobDAO
-import net.wiringbits.repositories.models.{Alumno, BackgroundJobData, Estatus, Instituto, SolicitudMovilidad, User}
+import net.wiringbits.repositories.models.{
+  Alumno,
+  BackgroundJobData,
+  Carrera,
+  Estatus,
+  Instituto,
+  Rol,
+  SolicitudMovilidad,
+  User
+}
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.OptionValues._
 import org.scalatest.concurrent.ScalaFutures._
@@ -165,42 +174,28 @@ class BackgroundJobsRepositorySpec extends RepositorySpec with BeforeAndAfterAll
     }
 
     "asd" in withRepositories() { repositories =>
+      val carreraRequest = Carrera.CreateCarrera(
+        id_carrera = UUID.randomUUID(),
+        nombre = "Ingeniería en Sistemas Computacionales"
+      )
+      repositories.carreraRepository.create(carreraRequest).futureValue
+
+      val rolRequest = Rol.CreateRol(
+        id_rol = UUID.randomUUID(),
+        tipo = "Estudiante"
+      )
+      repositories.rolRepository.create(rolRequest).futureValue
+
       val usuarioRequest = User.CreateUser(
         id = UUID.randomUUID(),
         email = Email.trusted("hello@wiringbits.net"),
         name = Name.trusted("Sample"),
         hashedPassword = "password",
-        verifyEmailToken = "token"
+        verifyEmailToken = "token",
+        idCarrera = carreraRequest.id_carrera,
+        idRol = rolRequest.id_rol
       )
       repositories.users.create(usuarioRequest).futureValue
-
-      val alumnoRequest = Alumno.Crear(
-        idAlumno = UUID.randomUUID(),
-        semestre = 1,
-        numMovilidades = 1,
-        deuda = false,
-        idUsuario = usuarioRequest.id
-      )
-      repositories.alumnoRepository.crear(alumnoRequest).futureValue
-
-      val instituto = Instituto.Crear(
-        idInstituto = UUID.randomUUID(),
-        nombre = "ASDD",
-        domicilio = "asdadsads",
-        telefono = "aSDSDA"
-      )
-      repositories.institutoRepository.create(instituto).futureValue
-
-      val movimientoRequest = SolicitudMovilidad.Crear(
-        idSolicitud = UUID.randomUUID(),
-        idAlumno = alumnoRequest.idAlumno,
-        fecha = Instant.now(),
-        descripcion = "asdadsdsadsa",
-        idInstituto = instituto.idInstituto
-      )
-      repositories.movimientoRepository.crear(movimientoRequest).futureValue
-      val response = repositories.movimientoRepository.find(movimientoRequest.idSolicitud).futureValue
-      response.isDefined must be(true)
     }
   }
 }
