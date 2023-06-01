@@ -23,4 +23,10 @@ class EstatusRepository @Inject() (database: Database)(implicit ec: DatabaseExec
     }
   }
 
+  def all(): Future[List[Estatus]] = Future {
+    database.withConnection { implicit conn =>
+      EstatusDAO.all()
+    }
+  }
+
 }

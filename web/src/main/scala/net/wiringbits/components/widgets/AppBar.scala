@@ -71,14 +71,13 @@ import slinky.web.html._
             Fragment(
               NavLinkButton("/", texts.home, onButtonClick),
               NavLinkButton("/solicitar", "Solicitar", onButtonClick),
-              NavLinkButton("/consultar", "Consultar", onButtonClick)
+              NavLinkButton("/consultar", "Consultar", onButtonClick),
+              NavLinkButton("/signout", texts.signOut, onButtonClick)
             )
           case _ =>
             Fragment(
               NavLinkButton("/", texts.home, onButtonClick),
-              NavLinkButton("/dashboard", texts.dashboard, onButtonClick),
-              NavLinkButton("/about", texts.about, onButtonClick),
-              NavLinkButton("/me", texts.profile, onButtonClick),
+              NavLinkButton("/gestionar", "Gestionar", onButtonClick),
               NavLinkButton("/signout", texts.signOut, onButtonClick)
             )
         }

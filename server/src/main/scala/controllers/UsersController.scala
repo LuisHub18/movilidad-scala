@@ -37,7 +37,9 @@ class UsersController @Inject() (
     crearSolicitudAction: CrearSolicitudAction,
     sendEmailVerificationTokenAction: SendEmailVerificationTokenAction,
     getMateriasAction: GetMateriasAction,
-    getSolicitudesAlumnoAction: GetSolicitudesAlumnoAction
+    getSolicitudesAlumnoAction: GetSolicitudesAlumnoAction,
+    getCoordinadorSolicitud: GetCoordinadorSolicitudAction,
+    solicitudCoordinadorAction: SolicitudCoordinadorAction
 )(implicit cc: ControllerComponents, ec: ExecutionContext)
     extends AbstractController(cc) {
   private val logger = LoggerFactory.getLogger(this.getClass)
@@ -371,6 +373,41 @@ class UsersController @Inject() (
     for {
       userId <- authenticate(request)
       response <- getSolicitudesAlumnoAction(userId)
+    } yield Ok(Json.toJson(response))
+  }
+
+  @ApiOperation(
+    value = "Devuelve las solicitudes pal coordinador"
+  )
+  @ApiResponses(
+    Array(
+      new ApiResponse(code = 200, message = "Got solicitudes", response = classOf[GetUserLogs.Response]),
+      new ApiResponse(code = 400, message = "Authentication failed")
+    )
+  )
+  def getCoordinadorSolicitudes() = handleGET { request =>
+    logger.info(s"Get solicitudes")
+    for {
+      userId <- authenticate(request)
+      response <- getCoordinadorSolicitud(userId)
+    } yield Ok(Json.toJson(response))
+  }
+
+  @ApiOperation(
+    value = "Aceptar?"
+  )
+  @ApiResponses(
+    Array(
+      new ApiResponse(code = 200, message = "Got solicitudes", response = classOf[GetUserLogs.Response]),
+      new ApiResponse(code = 400, message = "Authentication failed")
+    )
+  )
+  def solicitudCoordinador(idSolicitud: String, tipo: String) = handleGET { request =>
+    logger.info(s"Get solicitudes")
+    val idSolicitudUUID = UUID.fromString(idSolicitud)
+    for {
+      userId <- authenticate(request)
+      response <- solicitudCoordinadorAction(idSolicitudUUID, userId, tipo)
     } yield Ok(Json.toJson(response))
   }
 }

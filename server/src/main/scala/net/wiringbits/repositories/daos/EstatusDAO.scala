@@ -28,4 +28,12 @@ object EstatusDAO {
       """
       .as(estatusParser.singleOpt)
   }
+
+  def all()(implicit conn: Connection): List[Estatus] = {
+    SQL"""
+      SELECT id_estatus, descripcion
+      FROM estatus
+      """
+      .as(estatusParser.*)
+  }
 }

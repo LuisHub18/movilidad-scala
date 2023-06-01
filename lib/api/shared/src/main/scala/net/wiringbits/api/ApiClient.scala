@@ -34,6 +34,8 @@ trait ApiClient {
 
   def getMaterias(idInstituto: UUID): Future[GetMaterias.Response]
   def getSolicitudesAlumno(): Future[GetSolicitudesAlumno.Response]
+  def getCoordinadorSolicitud(): Future[GetCoordinadorSolicitud.Response]
+  def solicitudCoordinador(solicitud: UUID, tipo: String): Future[SolicitudCoordinador.Response]
 }
 
 object ApiClient {
@@ -306,14 +308,36 @@ object ApiClient {
     }
 
     override def getSolicitudesAlumno(): Future[GetSolicitudesAlumno.Response] = {
-        val path = ServerAPI.path :+ "solicitudes" :+ "alumno"
-        val uri = ServerAPI.withPath(path)
+      val path = ServerAPI.path :+ "solicitudes" :+ "alumno"
+      val uri = ServerAPI.withPath(path)
 
-        prepareRequest[GetSolicitudesAlumno.Response]
-            .get(uri)
-            .send(backend)
-            .map(_.body)
-            .flatMap(Future.fromTry)
+      prepareRequest[GetSolicitudesAlumno.Response]
+        .get(uri)
+        .send(backend)
+        .map(_.body)
+        .flatMap(Future.fromTry)
+    }
+
+    override def getCoordinadorSolicitud(): Future[GetCoordinadorSolicitud.Response] = {
+      val path = ServerAPI.path :+ "solicitudes" :+ "coordinador"
+      val uri = ServerAPI.withPath(path)
+
+      prepareRequest[GetCoordinadorSolicitud.Response]
+        .get(uri)
+        .send(backend)
+        .map(_.body)
+        .flatMap(Future.fromTry)
+    }
+
+    override def solicitudCoordinador(solicitud: UUID, tipo: String): Future[SolicitudCoordinador.Response] = {
+      val path = ServerAPI.path :+ "solicitudes" :+ solicitud.toString :+ tipo
+      val uri = ServerAPI.withPath(path)
+
+      prepareRequest[SolicitudCoordinador.Response]
+        .post(uri)
+        .send(backend)
+        .map(_.body)
+        .flatMap(Future.fromTry)
     }
   }
 }

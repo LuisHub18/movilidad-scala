@@ -49,6 +49,8 @@ GET /environment-config controllers.EnvironmentConfigController.getEnvironmentCo
 GET /universidades controllers.UsersController.getUniversidades()
 GET /materias/:idInstituto controllers.UsersController.getMaterias(idInstituto)
 GET /solicitudes/alumno controllers.UsersController.getSolicitudesAlumno()
+GET /solicitudes/coordinador controllers.UsersController.getCoordinadorSolicitudes()
+POST /solicitudes/:idSolicitud/:tipo controllers.UsersController.solicitudCoordinador(idSolicitud, tipo)
 
 
 

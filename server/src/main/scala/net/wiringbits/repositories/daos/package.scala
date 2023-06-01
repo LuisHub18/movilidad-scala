@@ -151,4 +151,21 @@ package object daos {
       "id_materia"
     )
   }
+
+  implicit val materiaMovilidadParser: RowParser[MateriaMovilidad] = {
+    Macro.parser[MateriaMovilidad](
+      "id_solicitud",
+      "id_materia",
+      "calificacion"
+    )
+  }
+
+  implicit val movimientosParser: RowParser[Movimientos] = {
+    Macro.parser[Movimientos](
+      "id_solicitud_movilidad",
+      "user_id",
+      "fecha_movimiento",
+      "id_estatus"
+    )
+  }
 }

@@ -8,6 +8,13 @@ import java.util.UUID
 object MateriaCarreraDAO {
   import anorm._
 
+  def all()(implicit conn: Connection): List[MateriaCarrera] = {
+    SQL"""
+      SELECT id_carrera, id_materia
+      FROM materia_carrera
+    """.as(materiaCarreraParser.*)
+  }
+
   def findByCarrera(idCarrera: UUID)(implicit conn: Connection): List[MateriaCarrera] = {
     SQL"""
       SELECT id_carrera, id_materia

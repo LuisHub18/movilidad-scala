@@ -27,4 +27,10 @@ class SolicitudMovilidadRepository @Inject() (database: Database)(implicit ec: D
       SolicitudMovilidadDAO.findByAlumno(idAlumno)
     }
   }
+
+  def findAsd(idInstituto: UUID): Future[List[SolicitudMovilidad]] = Future {
+    database.withConnection { implicit conn =>
+      SolicitudMovilidadDAO.findAsd(idInstituto)
+    }
+  }
 }

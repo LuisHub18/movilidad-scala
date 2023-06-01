@@ -12,6 +12,12 @@ import scala.concurrent.Future
 class MateriaCarreraRepository @Inject() (
     database: Database
 )(implicit ec: DatabaseExecutionContext) {
+  def all(): Future[List[MateriaCarrera]] = Future {
+    database.withConnection { implicit conn =>
+      MateriaCarreraDAO.all()
+    }
+  }
+
   def findByCarrera(idCarrera: UUID): Future[List[MateriaCarrera]] = Future {
     database.withConnection { implicit conn =>
       MateriaCarreraDAO.findByCarrera(idCarrera)

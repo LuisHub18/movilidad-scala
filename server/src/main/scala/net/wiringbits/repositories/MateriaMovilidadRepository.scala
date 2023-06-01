@@ -16,4 +16,10 @@ class MateriaMovilidadRepository @Inject() (
       MateriaMovilidadDAO.create(request)
     }
   }
+
+  def all(): Future[List[MateriaMovilidad]] = Future {
+    database.withConnection { implicit conn =>
+      MateriaMovilidadDAO.all()
+    }
+  }
 }
