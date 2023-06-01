@@ -11,5 +11,6 @@ case class RepositoryComponents(
     backgroundJobs: BackgroundJobsRepository,
     estatusRepository: EstatusRepository,
     alumnoRepository: AlumnoRepository,
-    materia: MateriaRepository
+    materia: MateriaRepository,
+    institutoRepository: InstitutoRepository
 )
