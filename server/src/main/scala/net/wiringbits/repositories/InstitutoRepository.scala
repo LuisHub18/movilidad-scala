@@ -17,6 +17,12 @@ class InstitutoRepository @Inject() (database: Database)(implicit ec: DatabaseEx
     }
   }
 
+  def all(): Future[List[Instituto]]= Future{
+    database.withConnection { implicit conn =>
+      InstitutoDAO.all()
+    }
+  }
+
   def find(idInstituto: UUID): Future[Option[Instituto]] = Future {
     database.withConnection { implicit conn =>
       InstitutoDAO.find(idInstituto)

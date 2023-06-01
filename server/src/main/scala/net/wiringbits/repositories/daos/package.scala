@@ -123,6 +123,7 @@ package object daos {
   val rolParser: RowParser[Rol] = {
     Macro.parser[Rol](
       "id_rol",
+              "tipo"
     )
   }
   
