@@ -19,6 +19,8 @@ trait RepositorySpec extends AnyWordSpec with PostgresSpec {
     val backgroundJobs = new BackgroundJobsRepository(db)(Executors.databaseEC, clock)
     val materia = new MateriaRepository(db)(Executors.databaseEC, clock)
     val estatus = new EstatusRepository(db)(Executors.databaseEC)
+    val alumno = new AlumnoRepository(db)(Executors.databaseEC)
+    
     val components =
       RepositoryComponents(
         db,
@@ -26,8 +28,9 @@ trait RepositorySpec extends AnyWordSpec with PostgresSpec {
         userTokens,
         userLogs,
         backgroundJobs,
-        materia,
-        estatus
+        estatus,
+        alumno,
+        materia
       )
     runTest(components)
   }

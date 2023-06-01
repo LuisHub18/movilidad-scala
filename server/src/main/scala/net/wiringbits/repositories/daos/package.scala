@@ -46,13 +46,6 @@ package object daos {
     )
   }
 
-  val carreraParser: RowParser[Carrera] = {
-    Macro.parser[Carrera](
-      "id_carrera",
-      "nombre"
-    )
-  }
-
   val userLogParser: RowParser[UserLog] = {
     Macro.parser[UserLog]("user_log_id", "user_id", "message", "created_at")
   }
@@ -96,6 +89,22 @@ package object daos {
     Macro.parser[Estatus](
       "id_estatus",
       "descripcion"
+    )
+  }
+
+  implicit val alumnoParser: RowParser[Alumno] = {
+    Macro.parser[Alumno](
+      "id_alumno",
+      "semestre",
+      "num_movilidades",
+      "deuda",
+      "user_id"
+    )
+  }
+  val carreraParser: RowParser[Carrera] = {
+    Macro.parser[Carrera](
+      "id_carrera",
+      "nombre"
     )
   }
 }

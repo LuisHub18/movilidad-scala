@@ -2,11 +2,11 @@ package net.wiringbits.repositories
 
 import akka.actor.ActorSystem
 import akka.stream.scaladsl._
-import net.wiringbits.common.models.Email
+import net.wiringbits.common.models.{Email, Name}
 import net.wiringbits.core.RepositorySpec
 import net.wiringbits.models.jobs.{BackgroundJobPayload, BackgroundJobStatus, BackgroundJobType}
 import net.wiringbits.repositories.daos.BackgroundJobDAO
-import net.wiringbits.repositories.models.{BackgroundJobData, Estatus}
+import net.wiringbits.repositories.models.{Alumno, BackgroundJobData, Estatus, User}
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.OptionValues._
 import org.scalatest.concurrent.ScalaFutures._
@@ -165,11 +165,25 @@ class BackgroundJobsRepositorySpec extends RepositorySpec with BeforeAndAfterAll
     }
 
     "asd" in withRepositories() { repositories =>
-      val request = Estatus.Crear(UUID.randomUUID(), "adsdsa")
-      repositories.estatusRepository.crear(request).futureValue
+      val request = User.CreateUser(
+        id = UUID.randomUUID(),
+        email = Email.trusted("hello@wiringbits.net"),
+        name = Name.trusted("Sample"),
+        hashedPassword = "password",
+        verifyEmailToken = "token"
+      )
+      repositories.users.create(request).futureValue
 
-      val result = repositories.estatusRepository.find(request.idEstatus).futureValue
-      result.isDefined must be(true)
+      val request2 = Alumno.Crear(
+        idAlumno = UUID.randomUUID(),
+        semestre = 1,
+        numMovilidades = 1,
+        deuda = false,
+        idUsuario = request.id
+      )
+      repositories.alumnoRepository.crear(request2).futureValue
+      val response = repositories.alumnoRepository.find(request2.idAlumno).futureValue
+      response.isDefined must be(true)
     }
   }
 }
