@@ -8,5 +8,6 @@ case class RepositoryComponents(
     users: UsersRepository,
     userTokens: UserTokensRepository,
     userLogs: UserLogsRepository,
-    backgroundJobs: BackgroundJobsRepository
+    backgroundJobs: BackgroundJobsRepository,
+    materia: MateriaRepository
 )

@@ -17,13 +17,15 @@ trait RepositorySpec extends AnyWordSpec with PostgresSpec {
     val userTokens = new UserTokensRepository(db)(Executors.databaseEC)
     val userLogs = new UserLogsRepository(db)(Executors.databaseEC)
     val backgroundJobs = new BackgroundJobsRepository(db)(Executors.databaseEC, clock)
+    val materia = new MateriaRepository(db)(Executors.databaseEC, clock)
     val components =
       RepositoryComponents(
         db,
         users,
         userTokens,
         userLogs,
-        backgroundJobs
+        backgroundJobs,
+        materia
       )
     runTest(components)
   }

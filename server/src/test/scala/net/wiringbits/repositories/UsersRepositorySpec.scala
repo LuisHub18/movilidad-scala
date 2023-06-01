@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.stream.scaladsl.Sink
 import net.wiringbits.common.models.{Email, Name}
 import net.wiringbits.core.RepositorySpec
-import net.wiringbits.repositories.models.User
+import net.wiringbits.repositories.models.{Materia, User}
 import net.wiringbits.util.EmailMessage
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.OptionValues._
@@ -34,7 +34,36 @@ class UsersRepositorySpec extends RepositorySpec with BeforeAndAfterAll {
       )
       repositories.users.create(request).futureValue
     }
-
+    "crear materia" in withRepositories(){
+      repositories =>
+        val request = Materia.CreateMateria(
+          id_materia = UUID.randomUUID(),
+          nombre = "Matematicas"
+        )
+        repositories.materia.create(request).futureValue
+    }
+    "return all the materias" in withRepositories(){
+      repositories =>
+        for (i <- 1 to 10){
+          val request = Materia.CreateMateria(
+            id_materia = UUID.randomUUID(),
+            nombre = "Matematicas"
+          )
+          repositories.materia.create(request).futureValue
+        }
+        val response = repositories.materia.all().futureValue
+      response.length must be (10)
+    }
+    "find the materia" in withRepositories(){
+      repositories =>
+        val request = Materia.CreateMateria(
+          id_materia = UUID.randomUUID(),
+          nombre = "Matematicas"
+        )
+        repositories.materia.create(request).futureValue
+        val response = repositories.materia.find(request.id_materia).futureValue
+        response.value.nombre must be ("Matematicas")
+    }
     "create a token for verifying the email" in withRepositories() { repositories =>
       val request = User.CreateUser(
         id = UUID.randomUUID(),
