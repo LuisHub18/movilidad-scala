@@ -35,7 +35,9 @@ package object daos {
       "email",
       "password",
       "created_at",
-      "verified_on"
+      "verified_on",
+      "id_carrera",
+      "id_rol"
     )
   }
 
@@ -117,12 +119,13 @@ package object daos {
       "nombre"
     )
   }
-  
+
   val rolParser: RowParser[Rol] = {
     Macro.parser[Rol](
       "id_rol",
       "tipo"
-
+    )
+  }
 
   implicit val movimientosParser: RowParser[SolicitudMovilidad] = {
     Macro.parser[SolicitudMovilidad](

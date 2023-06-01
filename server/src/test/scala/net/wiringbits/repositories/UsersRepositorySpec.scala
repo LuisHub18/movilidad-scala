@@ -34,87 +34,82 @@ class UsersRepositorySpec extends RepositorySpec with BeforeAndAfterAll {
       )
       repositories.users.create(request).futureValue
     }
-    "crear materia" in withRepositories(){
-      repositories =>
-        val request = Materia.CreateMateria(
-          id_materia = UUID.randomUUID(),
-          nombre = "Matematicas"
-        )
-        repositories.materia.create(request).futureValue
+    "crear materia" in withRepositories() { repositories =>
+      val request = Materia.CreateMateria(
+        id_materia = UUID.randomUUID(),
+        nombre = "Matematicas"
+      )
+      repositories.materia.create(request).futureValue
     }
-    "crear carrera" in withRepositories(){
-      repositories =>
-        val request = Carrera.CreateCarrera(
-          id_carrera = UUID.randomUUID(),
-          nombre = "Matematicas"
-        )
-        repositories.carreraRepository.create(request).futureValue
+    "crear carrera" in withRepositories() { repositories =>
+      val request = Carrera.CreateCarrera(
+        id_carrera = UUID.randomUUID(),
+        nombre = "Matematicas"
+      )
+      repositories.carreraRepository.create(request).futureValue
     }
-    "all carrera" in withRepositories(){
-      repositories =>
-        val request = Carrera.CreateCarrera(
-          id_carrera = UUID.randomUUID(),
-          nombre = "Matematicas"
-        )
-        repositories.carreraRepository.create(request).futureValue
-        val response = repositories.carreraRepository.all().futureValue
-        response.length must be (1)
+    "all carrera" in withRepositories() { repositories =>
+      val request = Carrera.CreateCarrera(
+        id_carrera = UUID.randomUUID(),
+        nombre = "Matematicas"
+      )
+      repositories.carreraRepository.create(request).futureValue
+      val response = repositories.carreraRepository.all().futureValue
+      response.length must be(1)
     }
-    "find carrera" in withRepositories(){ repositories =>
+    "find carrera" in withRepositories() { repositories =>
       val request = Carrera.CreateCarrera(
         id_carrera = UUID.randomUUID(),
         nombre = "Matematicas"
       )
       repositories.carreraRepository.create(request).futureValue
       val response = repositories.carreraRepository.find(request.id_carrera).futureValue
-      response.value.nombre must be ("Matematicas")
+      response.value.nombre must be("Matematicas")
     }
-    "crear rol" in withRepositories(){ repositories =>
+    "crear rol" in withRepositories() { repositories =>
       val request = Rol.CreateRol(
         id_rol = UUID.randomUUID(),
         tipo = "Alumno"
       )
       repositories.rolRepository.create(request).futureValue
     }
-    "all rol" in withRepositories(){ repositories =>
+    "all rol" in withRepositories() { repositories =>
       val request = Rol.CreateRol(
         id_rol = UUID.randomUUID(),
         tipo = "Alumno"
       )
       repositories.rolRepository.create(request).futureValue
       val response = repositories.rolRepository.all().futureValue
-      response.length must be (1)
+      response.length must be(1)
     }
-    "find rol" in withRepositories(){ repositories =>
+    "find rol" in withRepositories() { repositories =>
       val request = Rol.CreateRol(
         id_rol = UUID.randomUUID(),
         tipo = "Alumno"
       )
       repositories.rolRepository.create(request).futureValue
       val response = repositories.rolRepository.find(request.id_rol).futureValue
-      response.value.tipo must be ("Alumno")
+      response.value.tipo must be("Alumno")
     }
-    "return all the materias" in withRepositories(){
-      repositories =>
-        for (i <- 1 to 10){
-          val request = Materia.CreateMateria(
-            id_materia = UUID.randomUUID(),
-            nombre = "Matematicas"
-          )
-          repositories.materia.create(request).futureValue
-        }
-        val response = repositories.materia.all().futureValue
-      response.length must be (10)
-    }
-    "find the materia" in withRepositories(){
-      repositories =>
+    "return all the materias" in withRepositories() { repositories =>
+      for (i <- 1 to 10) {
         val request = Materia.CreateMateria(
           id_materia = UUID.randomUUID(),
           nombre = "Matematicas"
         )
         repositories.materia.create(request).futureValue
-        val response = repositories.materia.find(request.id_materia).futureValue
-        response.value.nombre must be ("Matematicas")
+      }
+      val response = repositories.materia.all().futureValue
+      response.length must be(10)
+    }
+    "find the materia" in withRepositories() { repositories =>
+      val request = Materia.CreateMateria(
+        id_materia = UUID.randomUUID(),
+        nombre = "Matematicas"
+      )
+      repositories.materia.create(request).futureValue
+      val response = repositories.materia.find(request.id_materia).futureValue
+      response.value.nombre must be("Matematicas")
     }
     "create a token for verifying the email" in withRepositories() { repositories =>
       val request = User.CreateUser(

@@ -11,9 +11,19 @@ case class User(
     email: Email,
     hashedPassword: String,
     createdAt: Instant,
-    verifiedOn: Option[Instant]
+    verifiedOn: Option[Instant],
+    idCarrera: UUID,
+    idRol: UUID
 )
 
 object User {
-  case class CreateUser(id: UUID, name: Name, email: Email, hashedPassword: String, verifyEmailToken: String)
+  case class CreateUser(
+      id: UUID,
+      name: Name,
+      email: Email,
+      hashedPassword: String,
+      verifyEmailToken: String,
+      idCarrera: UUID = UUID.randomUUID(),
+      idRol: UUID = UUID.randomUUID()
+  )
 }

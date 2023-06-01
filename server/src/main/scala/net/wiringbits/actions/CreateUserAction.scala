@@ -51,7 +51,9 @@ class CreateUserAction @Inject() (
           email = request.email,
           hashedPassword = hashedPassword,
           createdAt = Instant.now,
-          verifiedOn = None
+          verifiedOn = None,
+          idCarrera = UUID.randomUUID(),
+          idRol = UUID.randomUUID()
         ),
         token
       )

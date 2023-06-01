@@ -13,13 +13,15 @@ object UsersDAO {
   def create(request: User.CreateUser)(implicit conn: Connection): Unit = {
     val _ = SQL"""
         INSERT INTO users
-          (user_id, name, email, password, created_at)
+          (user_id, name, email, password, created_at, id_carrera, id_rol)
         VALUES (
           ${request.id.toString}::UUID,
           ${request.name.string},
           ${request.email.string},
           ${request.hashedPassword},
-          NOW()
+          NOW(),
+          ${request.idCarrera}::UUID,
+          ${request.idRol}::UUID
         )
         """
       .execute()
@@ -27,14 +29,14 @@ object UsersDAO {
 
   def all()(implicit conn: Connection): List[User] = {
     SQL"""
-        SELECT user_id, name, email, password, created_at, verified_on
+        SELECT user_id, name, email, password, created_at, verified_on, id_carrera, id_rol
         FROM users
         """.as(userParser.*)
   }
 
   def find(email: Email)(implicit conn: Connection): Option[User] = {
     SQL"""
-        SELECT user_id, name, email, password, created_at, verified_on
+        SELECT user_id, name, email, password, created_at, verified_on, id_carrera, id_rol
         FROM users
         WHERE email = ${email.string}::CITEXT
         """.as(userParser.singleOpt)
@@ -42,7 +44,7 @@ object UsersDAO {
 
   def find(userId: UUID)(implicit conn: Connection): Option[User] = {
     SQL"""
-        SELECT user_id, name, email, password, created_at, verified_on
+        SELECT user_id, name, email, password, created_at, verified_on, id_carrera, id_rol
         FROM users
         WHERE user_id = ${userId.toString}::UUID
         """.as(userParser.singleOpt)
@@ -74,7 +76,7 @@ object UsersDAO {
 
   def findUserForUpdate(userId: UUID)(implicit conn: Connection): Option[User] = {
     SQL"""
-        SELECT user_id, name, email, password, created_at, verified_on
+        SELECT user_id, name, email, password, created_at, verified_on, id_carrera, id_rol
         FROM users
         WHERE user_id = ${userId.toString}::UUID
         FOR UPDATE NOWAIT
