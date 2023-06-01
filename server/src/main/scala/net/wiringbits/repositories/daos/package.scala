@@ -39,6 +39,13 @@ package object daos {
     )
   }
 
+  val materiaParser: RowParser[Materia] = {
+    Macro.parser[Materia](
+      "id_materia",
+      "nombre"
+    )
+  }
+
   val userLogParser: RowParser[UserLog] = {
     Macro.parser[UserLog]("user_log_id", "user_id", "message", "created_at")
   }
