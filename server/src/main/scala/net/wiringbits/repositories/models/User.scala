@@ -13,7 +13,8 @@ case class User(
     createdAt: Instant,
     verifiedOn: Option[Instant],
     idCarrera: UUID,
-    idRol: UUID
+    idRol: UUID,
+    idInstituto: UUID
 )
 
 object User {
@@ -24,6 +25,7 @@ object User {
       hashedPassword: String,
       verifyEmailToken: String,
       idCarrera: UUID = UUID.randomUUID(),
-      idRol: UUID = UUID.randomUUID()
+      idRol: UUID = UUID.randomUUID(),
+      idInstituto: UUID = UUID.randomUUID()
   )
 }

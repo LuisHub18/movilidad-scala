@@ -20,7 +20,9 @@ object CreateUser {
       @ApiModelProperty(value = "Carrera", dataType = "String")
       idCarrera: UUID,
       @ApiModelProperty(value = "Rol", dataType = "String")
-      rolId: UUID
+      rolId: UUID,
+      @ApiModelProperty(value = "Instituto", dataType = "String")
+      idInstituto: UUID
   )
   @ApiModel(value = "CreateUserResponse", description = "Response for the create user API")
   case class Response(
