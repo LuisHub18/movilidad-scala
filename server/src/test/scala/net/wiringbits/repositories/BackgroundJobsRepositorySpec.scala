@@ -6,7 +6,7 @@ import net.wiringbits.common.models.Email
 import net.wiringbits.core.RepositorySpec
 import net.wiringbits.models.jobs.{BackgroundJobPayload, BackgroundJobStatus, BackgroundJobType}
 import net.wiringbits.repositories.daos.BackgroundJobDAO
-import net.wiringbits.repositories.models.BackgroundJobData
+import net.wiringbits.repositories.models.{BackgroundJobData, Estatus}
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.OptionValues._
 import org.scalatest.concurrent.ScalaFutures._
@@ -162,6 +162,14 @@ class BackgroundJobsRepositorySpec extends RepositorySpec with BeforeAndAfterAll
     "fail if the notification doesn't exists" in withRepositories() { repositories =>
       pending // TODO: setStatusToFailed must actually return an error because right now it succeeds
       repositories.backgroundJobs.setStatusToSuccess(UUID.randomUUID()).futureValue
+    }
+
+    "asd" in withRepositories() { repositories =>
+      val request = Estatus.Crear(UUID.randomUUID(), "adsdsa")
+      repositories.estatusRepository.crear(request).futureValue
+
+      val result = repositories.estatusRepository.find(request.idEstatus).futureValue
+      result.isDefined must be(true)
     }
   }
 }
