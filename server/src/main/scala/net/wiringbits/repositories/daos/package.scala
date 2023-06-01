@@ -101,4 +101,13 @@ package object daos {
       "user_id"
     )
   }
+
+  implicit val institutoParser: RowParser[Instituto] = {
+    Macro.parser[Instituto](
+      "id_instituto",
+      "nombre",
+      "domicilio",
+      "telefono"
+    )
+  }
 }
