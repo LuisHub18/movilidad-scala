@@ -18,6 +18,7 @@ import slinky.core.{FunctionalComponent, SyntheticEvent}
 import slinky.web.html.{form, onSubmit}
 import typings.reactRouter.mod.useHistory
 
+import java.util.UUID
 import scala.util.{Failure, Success}
 
 @react object ResetPasswordForm {
@@ -58,7 +59,7 @@ import scala.util.{Failure, Success}
           .resetPassword(request)
           .onComplete {
             case Success(res) =>
-              props.ctx.loggedIn(User(name = res.name, email = res.email, ""))
+              props.ctx.loggedIn(User(name = res.name, email = res.email, rol = "", id_instituto = UUID.randomUUID()))
               setFormData(_.submitted)
               history.push("/dashboard")
             case Failure(ex) =>

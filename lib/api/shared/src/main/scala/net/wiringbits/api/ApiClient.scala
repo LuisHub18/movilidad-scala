@@ -31,6 +31,8 @@ trait ApiClient {
   def sendEmailVerificationToken(
       request: SendEmailVerificationToken.Request
   ): Future[SendEmailVerificationToken.Response]
+
+  def getMaterias(idInstituto: UUID): Future[GetMaterias.Response]
 }
 
 object ApiClient {
@@ -274,6 +276,17 @@ object ApiClient {
       prepareRequest[SendEmailVerificationToken.Response]
         .post(uri)
         .body(Json.toJson(request).toString())
+        .send(backend)
+        .map(_.body)
+        .flatMap(Future.fromTry)
+    }
+
+    override def getMaterias(idInstituto: UUID): Future[GetMaterias.Response] = {
+      val path = ServerAPI.path :+ "materias" :+ idInstituto.toString
+      val uri = ServerAPI.withPath(path)
+
+      prepareRequest[GetMaterias.Response]
+        .get(uri)
         .send(backend)
         .map(_.body)
         .flatMap(Future.fromTry)

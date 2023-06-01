@@ -28,7 +28,8 @@ object GetCurrentUser {
         example = "2022-03-30T18:18:25.575123Z"
       )
       createdAt: Instant,
-      rol: String
+      rol: String,
+      idInstituto: UUID
   )
   implicit val getUserRequestFormat: Format[Request] = Json.format[Request]
   implicit val getUserResponseFormat: Format[Response] = Json.format[Response]

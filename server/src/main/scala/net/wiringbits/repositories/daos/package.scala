@@ -137,4 +137,18 @@ package object daos {
       "id_instituto"
     )
   }
+
+  implicit val carreraInstitutoParser: RowParser[CarreraInstituto] = {
+    Macro.parser[CarreraInstituto](
+      "id_carrera",
+      "id_instituto"
+    )
+  }
+
+  implicit val materiaCarreraParser: RowParser[MateriaCarrera] = {
+    Macro.parser[MateriaCarrera](
+      "id_carrera",
+      "id_materia"
+    )
+  }
 }
