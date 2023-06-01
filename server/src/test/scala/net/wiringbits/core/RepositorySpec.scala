@@ -29,8 +29,7 @@ trait RepositorySpec extends AnyWordSpec with PostgresSpec {
         backgroundJobs,
         estatus,
         alumno,
-        materia,
-        estatus
+        materia
       )
     runTest(components)
   }
