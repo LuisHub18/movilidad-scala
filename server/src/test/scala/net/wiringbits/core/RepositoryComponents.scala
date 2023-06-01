@@ -12,5 +12,6 @@ case class RepositoryComponents(
     estatusRepository: EstatusRepository,
     alumnoRepository: AlumnoRepository,
     materia: MateriaRepository,
-    institutoRepository: InstitutoRepository
+    institutoRepository: InstitutoRepository,
+    movimientoRepository: MovimientoRepository
 )
