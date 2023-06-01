@@ -39,7 +39,9 @@ class CreateUserAction @Inject() (
           name = request.name,
           email = request.email,
           hashedPassword = hashedPassword,
-          verifyEmailToken = hmacToken
+          verifyEmailToken = hmacToken,
+          idCarrera = request.idCarrera,
+          idRol = request.rolId
         )
       _ <- usersRepository.create(createUser)
 

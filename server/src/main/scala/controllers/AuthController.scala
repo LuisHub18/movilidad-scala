@@ -55,6 +55,7 @@ class AuthController @Inject() (
   def login() = handleJsonBody[Login.Request] { request =>
     val body = request.body
     logger.info(s"Login API: ${body.email}")
+    logger.info(s"Login API: ${body.password}")
     for {
       response <- loginAction(body)
     } yield Ok(Json.toJson(response)).withSession("id" -> response.id.toString)

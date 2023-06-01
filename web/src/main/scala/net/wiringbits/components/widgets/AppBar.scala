@@ -65,14 +65,23 @@ import slinky.web.html._
     }
 
     val menu = auth match {
-      case AuthState.Authenticated(_) =>
-        Fragment(
-          NavLinkButton("/", texts.home, onButtonClick),
-          NavLinkButton("/dashboard", texts.dashboard, onButtonClick),
-          NavLinkButton("/about", texts.about, onButtonClick),
-          NavLinkButton("/me", texts.profile, onButtonClick),
-          NavLinkButton("/signout", texts.signOut, onButtonClick)
-        )
+      case AuthState.Authenticated(user) =>
+        user.rol match {
+          case "Alumno" =>
+            Fragment(
+              NavLinkButton("/", texts.home, onButtonClick),
+              NavLinkButton("/solicitar", "Solicitar", onButtonClick),
+              NavLinkButton("/consultar", "Consultar", onButtonClick)
+            )
+          case _ =>
+            Fragment(
+              NavLinkButton("/", texts.home, onButtonClick),
+              NavLinkButton("/dashboard", texts.dashboard, onButtonClick),
+              NavLinkButton("/about", texts.about, onButtonClick),
+              NavLinkButton("/me", texts.profile, onButtonClick),
+              NavLinkButton("/signout", texts.signOut, onButtonClick)
+            )
+        }
 
       case AuthState.Unauthenticated =>
         Fragment(

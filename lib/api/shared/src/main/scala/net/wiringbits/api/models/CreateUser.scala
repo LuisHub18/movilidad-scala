@@ -16,7 +16,11 @@ object CreateUser {
       @ApiModelProperty(value = "The user's password", dataType = "String", example = "notSoWeakPassword")
       password: Password,
       @ApiModelProperty(value = "The ReCAPTCHA value", dataType = "String")
-      captcha: Captcha
+      captcha: Captcha,
+      @ApiModelProperty(value = "Carrera", dataType = "String")
+      idCarrera: UUID,
+      @ApiModelProperty(value = "Rol", dataType = "String")
+      rolId: UUID
   )
   @ApiModel(value = "CreateUserResponse", description = "Response for the create user API")
   case class Response(
