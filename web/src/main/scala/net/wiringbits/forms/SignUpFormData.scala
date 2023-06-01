@@ -46,6 +46,7 @@ case class SignUpFormData(
       password,
       captcha,
       UUID.randomUUID(),
+      UUID.randomUUID(),
       UUID.randomUUID()
     )
   }
