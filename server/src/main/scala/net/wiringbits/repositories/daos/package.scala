@@ -84,4 +84,11 @@ package object daos {
       "updated_at"
     )
   }
+
+  implicit val estatusParser: RowParser[Estatus] = {
+    Macro.parser[Estatus](
+      "id_estatus",
+      "descripcion"
+    )
+  }
 }

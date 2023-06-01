@@ -9,5 +9,9 @@ case class RepositoryComponents(
     userTokens: UserTokensRepository,
     userLogs: UserLogsRepository,
     backgroundJobs: BackgroundJobsRepository,
+<<<<<<< HEAD
     materia: MateriaRepository
+=======
+    estatusRepository: EstatusRepository
+>>>>>>> d2ee276c7bcfe07d89e0ac845f3d637b00500c1a
 )
