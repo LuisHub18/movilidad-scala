@@ -30,7 +30,7 @@ import scala.util.{Failure, Success}
 
         props.ctx.api.client.currentUser().onComplete {
           case Success(res) =>
-            props.ctx.loggedIn(User(name = res.name, email = res.email))
+            props.ctx.loggedIn(User(name = res.name, email = res.email, res.rol))
             setInitialized(true)
 
           case Failure(ex) =>

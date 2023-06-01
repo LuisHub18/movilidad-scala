@@ -4,6 +4,8 @@ import net.wiringbits.api.models.CreateUser
 import net.wiringbits.common.models.{Captcha, Email, Name, Password}
 import net.wiringbits.webapp.utils.slinkyUtils.forms.{FormData, FormField}
 
+import java.util.UUID
+
 case class SignUpFormData(
     name: FormField[Name],
     email: FormField[Email],
@@ -42,7 +44,9 @@ case class SignUpFormData(
       name,
       email,
       password,
-      captcha
+      captcha,
+      UUID.randomUUID(),
+      UUID.randomUUID()
     )
   }
 }

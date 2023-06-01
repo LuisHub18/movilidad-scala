@@ -45,6 +45,8 @@ import scala.util.{Failure, Success}
     val forgotPassword = route("/forgot-password", props.ctx)(ForgotPasswordPage(props.ctx))
     val resetPassword = route("/reset-password/:resetPasswordCode", props.ctx)(ResetPasswordPage(props.ctx))
     val resendVerifyEmail = route("/resend-verify-email", props.ctx)(ResendVerifyEmailPage(props.ctx))
+    val solicitarMovilidad = route("/solicitar", props.ctx)(SolicitarMovilidadPage(props.ctx))
+    val consularSolicitudes = route("/consultar", props.ctx)(ConsultarSolicitudesPage(props.ctx))
 
     def dashboard(user: User) = route("/dashboard", props.ctx)(DashboardPage(props.ctx, user))
     def me(user: User) = route("/me", props.ctx)(UserEditPage(props.ctx, user))
@@ -71,19 +73,17 @@ import scala.util.{Failure, Success}
       case AuthState.Unauthenticated =>
         router.Switch(
           home,
-          about,
           signIn,
-          signUp,
-          email,
-          emailCode,
-          forgotPassword,
-          resetPassword,
-          resendVerifyEmail,
           catchAllRoute
         )
 
       case AuthState.Authenticated(user) =>
-        router.Switch(home, me(user), dashboard(user), about, signOut, catchAllRoute)
+        println(user.rol)
+        user.rol match {
+          case "Alumno" =>
+            router.Switch(home, solicitarMovilidad, consularSolicitudes)
+          case _ => router.Switch(home, me(user), about, signOut, catchAllRoute)
+        }
     }
   }
 }
