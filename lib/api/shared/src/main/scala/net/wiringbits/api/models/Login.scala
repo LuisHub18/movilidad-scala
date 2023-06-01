@@ -29,7 +29,8 @@ object Login {
       name: Name,
       @ApiModelProperty(value = "The email for the user", dataType = "String", example = "Alex")
       email: Email,
-      rol: String
+      rol: String,
+      id_instituto: UUID
   )
 
   implicit val loginRequestFormat: Format[Request] = Json.format[Request]

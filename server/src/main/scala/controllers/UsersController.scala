@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory
 import play.api.libs.json.Json
 import play.api.mvc.{AbstractController, ControllerComponents}
 
+import java.util.UUID
 import javax.inject.Inject
 import scala.concurrent.ExecutionContext
 
@@ -34,7 +35,8 @@ class UsersController @Inject() (
     getUserLogsAction: GetUserLogsAction,
     getUniversidadesAction: GetUniversidadesAction,
     crearSolicitudAction: CrearSolicitudAction,
-    sendEmailVerificationTokenAction: SendEmailVerificationTokenAction
+    sendEmailVerificationTokenAction: SendEmailVerificationTokenAction,
+    getMateriasAction: GetMateriasAction
 )(implicit cc: ControllerComponents, ec: ExecutionContext)
     extends AbstractController(cc) {
   private val logger = LoggerFactory.getLogger(this.getClass)
@@ -331,8 +333,26 @@ class UsersController @Inject() (
   def getUniversidades() = handleGET { request =>
     logger.info(s"Get universidades")
     for {
-      //userId <- authenticate(request)
+      // userId <- authenticate(request)
       response <- getUniversidadesAction()
+    } yield Ok(Json.toJson(response))
+  }
+
+  @ApiOperation(
+    value = "Devuelve las materias"
+  )
+  @ApiResponses(
+    Array(
+      new ApiResponse(code = 200, message = "Got materias", response = classOf[GetUserLogs.Response]),
+      new ApiResponse(code = 400, message = "Authentication failed")
+    )
+  )
+  def getMaterias(idInstituto: String) = handleGET { request =>
+    logger.info(s"Get materias")
+    val idInstitutoUUID = UUID.fromString(idInstituto)
+    for {
+      userId <- authenticate(request)
+      response <- getMateriasAction(userId, idInstitutoUUID)
     } yield Ok(Json.toJson(response))
   }
 }

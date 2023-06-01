@@ -24,7 +24,8 @@ class GetUserAction @Inject() (
       email = user.email,
       name = user.name,
       createdAt = user.createdAt,
-      rol = rol.tipo
+      rol = rol.tipo,
+      idInstituto = user.idInstituto
     )
   }
 

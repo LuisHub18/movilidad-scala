@@ -47,6 +47,7 @@ GET /environment-config controllers.EnvironmentConfigController.getEnvironmentCo
 
 
 GET /universidades controllers.UsersController.getUniversidades()
+GET /materias/:idInstituto controllers.UsersController.getMaterias(idInstituto)
 
 
 

@@ -30,6 +30,6 @@ class LoginAction @Inject() (
 
       // A login token is created
       _ <- userLogsRepository.create(user.id, "Logged in successfully")
-    } yield Login.Response(user.id, user.name, user.email, status.tipo)
+    } yield Login.Response(user.id, user.name, user.email, status.tipo, user.idInstituto)
   }
 }
