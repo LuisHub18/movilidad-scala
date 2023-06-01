@@ -31,4 +31,13 @@ object SolicitudMovilidadDAO {
       """
       .as(solicitudMovilidadParser.singleOpt)
   }
+
+  def findByAlumno(id: UUID)(implicit conn: Connection): List[SolicitudMovilidad] = {
+    SQL"""
+      SELECT id_solicitud, id_alumno, fecha, descripcion, id_instituto
+      FROM solicitud_movilidad
+      WHERE id_alumno = $id::UUID
+      """
+      .as(solicitudMovilidadParser.*)
+  }
 }

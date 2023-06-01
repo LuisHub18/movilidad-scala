@@ -33,6 +33,7 @@ trait ApiClient {
   ): Future[SendEmailVerificationToken.Response]
 
   def getMaterias(idInstituto: UUID): Future[GetMaterias.Response]
+  def getSolicitudesAlumno(): Future[GetSolicitudesAlumno.Response]
 }
 
 object ApiClient {
@@ -302,6 +303,17 @@ object ApiClient {
         .send(backend)
         .map(_.body)
         .flatMap(Future.fromTry)
+    }
+
+    override def getSolicitudesAlumno(): Future[GetSolicitudesAlumno.Response] = {
+        val path = ServerAPI.path :+ "solicitudes" :+ "alumno"
+        val uri = ServerAPI.withPath(path)
+
+        prepareRequest[GetSolicitudesAlumno.Response]
+            .get(uri)
+            .send(backend)
+            .map(_.body)
+            .flatMap(Future.fromTry)
     }
   }
 }

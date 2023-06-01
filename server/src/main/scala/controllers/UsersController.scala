@@ -36,7 +36,8 @@ class UsersController @Inject() (
     getUniversidadesAction: GetUniversidadesAction,
     crearSolicitudAction: CrearSolicitudAction,
     sendEmailVerificationTokenAction: SendEmailVerificationTokenAction,
-    getMateriasAction: GetMateriasAction
+    getMateriasAction: GetMateriasAction,
+    getSolicitudesAlumnoAction: GetSolicitudesAlumnoAction
 )(implicit cc: ControllerComponents, ec: ExecutionContext)
     extends AbstractController(cc) {
   private val logger = LoggerFactory.getLogger(this.getClass)
@@ -353,6 +354,23 @@ class UsersController @Inject() (
     for {
       userId <- authenticate(request)
       response <- getMateriasAction(userId, idInstitutoUUID)
+    } yield Ok(Json.toJson(response))
+  }
+
+  @ApiOperation(
+    value = "Devuelve las solicitudes"
+  )
+  @ApiResponses(
+    Array(
+      new ApiResponse(code = 200, message = "Got solicitudes", response = classOf[GetUserLogs.Response]),
+      new ApiResponse(code = 400, message = "Authentication failed")
+    )
+  )
+  def getSolicitudesAlumno() = handleGET { request =>
+    logger.info(s"Get solicitudes")
+    for {
+      userId <- authenticate(request)
+      response <- getSolicitudesAlumnoAction(userId)
     } yield Ok(Json.toJson(response))
   }
 }
