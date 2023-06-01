@@ -121,10 +121,11 @@ package object daos {
   val rolParser: RowParser[Rol] = {
     Macro.parser[Rol](
       "id_rol",
-      "tipo"
+      "tipo")
+  }
 
 
-  implicit val movimientosParser: RowParser[SolicitudMovilidad] = {
+  implicit val solicitudMovilidadParser: RowParser[SolicitudMovilidad] = {
     Macro.parser[SolicitudMovilidad](
       "id_solicitud",
       "id_alumno",

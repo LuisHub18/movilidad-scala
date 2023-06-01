@@ -15,5 +15,5 @@ case class RepositoryComponents(
     institutoRepository: InstitutoRepository,
     carreraRepository: CarreraRepository,
     rolRepository: RolRepository,
-    movimientoRepository: MovimientoRepository
+    movimientoRepository: SolicitudMovilidadRepository
 )
