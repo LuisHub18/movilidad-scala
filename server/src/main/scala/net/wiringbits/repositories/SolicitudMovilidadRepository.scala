@@ -9,7 +9,7 @@ import java.util.UUID
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class SolicitudMovilidadRepository @Inject()(database: Database)(implicit ec: DatabaseExecutionContext) {
+class SolicitudMovilidadRepository @Inject() (database: Database)(implicit ec: DatabaseExecutionContext) {
   def crear(request: SolicitudMovilidad.Crear): Future[Unit] = Future {
     database.withConnection { implicit conn =>
       SolicitudMovilidadDAO.create(request)
@@ -19,6 +19,12 @@ class SolicitudMovilidadRepository @Inject()(database: Database)(implicit ec: Da
   def find(idMovimiento: UUID): Future[Option[SolicitudMovilidad]] = Future {
     database.withConnection { implicit conn =>
       SolicitudMovilidadDAO.find(idMovimiento)
+    }
+  }
+
+  def findByAlumno(idAlumno: UUID): Future[List[SolicitudMovilidad]] = Future {
+    database.withConnection { implicit conn =>
+      SolicitudMovilidadDAO.findByAlumno(idAlumno)
     }
   }
 }
