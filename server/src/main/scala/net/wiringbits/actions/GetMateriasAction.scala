@@ -19,9 +19,12 @@ class GetMateriasAction @Inject() (
     usersRepository: UsersRepository
 )(implicit ec: ExecutionContext) {
   def apply(userId: UUID, idInstituto: UUID): Future[GetMaterias.Response] = for {
+    user <- usersRepository.find(userId).map(_.getOrElse(throw new Exception("User not found")))
     carreras <- carreraInstitutoRepository.findByInstituto(idInstituto).map(_.map(_.idCarrera))
     materias1 <- Future.sequence(
-      carreras.map(x => materiaCarreraRepository.findByCarrera(x).map(_.filter(_.idCarrera == x).map(_.idMateria)))
+      carreras.map(x =>
+        materiaCarreraRepository.findByCarrera(x).map(_.filter(_.idCarrera == user.idCarrera).map(_.idMateria))
+      )
     )
     materias2 = materias1.flatten.distinct
     materiasResult <- materiaRepository.all().map(_.filter(x => materias2.contains(x.id_materia)))

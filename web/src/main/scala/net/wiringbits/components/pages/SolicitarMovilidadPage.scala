@@ -32,7 +32,7 @@ import java.util.UUID
       () => {
         props.ctx.api.client.getUniversidades().onComplete {
           case scala.util.Success(universidades) =>
-            setUniversidades(universidades.data.filterNot(_.id_instituto != props.user.id_instituto))
+            setUniversidades(universidades.data.filterNot(_.id_instituto == props.user.id_instituto))
           case scala.util.Failure(exception) =>
             println(exception)
         }

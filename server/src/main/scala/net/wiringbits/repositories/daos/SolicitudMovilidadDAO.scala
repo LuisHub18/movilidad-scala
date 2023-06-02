@@ -45,7 +45,6 @@ object SolicitudMovilidadDAO {
     SQL"""
         SELECT id_solicitud, id_alumno, fecha, descripcion, id_instituto
         FROM solicitud_movilidad
-        WHERE id_instituto = $idInstituto::UUID
        """.as(solicitudMovilidadParser.*)
   }
 }

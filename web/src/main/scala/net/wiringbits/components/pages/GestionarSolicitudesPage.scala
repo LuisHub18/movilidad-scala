@@ -15,7 +15,7 @@ import slinky.core.facade.{Fragment, Hooks}
   val component: FunctionalComponent[Props] = FunctionalComponent[Props] { props =>
     val (solicitudes, setSolicitudes) =
       Hooks.useState[List[GetCoordinadorSolicitud.Response.SolicitudMovilidad]](List.empty)
-    val (_, update) = GenericHooks.useForceRefresh
+    val (tem, update) = GenericHooks.useForceRefresh
 
     Hooks.useEffect(
       () => {
@@ -28,7 +28,7 @@ import slinky.core.facade.{Fragment, Hooks}
           }
         }
       },
-      ""
+      List(tem)
     )
 
     mui.Table(
